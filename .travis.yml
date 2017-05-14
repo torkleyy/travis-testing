@@ -13,10 +13,10 @@ addons:
   apt:
     packages:
       - libxxf86vm-dev
-      - libxinerama-dev
-      - libxinerama1
-      - libxcursor-dev
-      - libxcursor1
       - libosmesa6-dev
+      - libcurl4-openssl-dev      # for kcov
+      - libelf-dev                # for kcov
+      - libdw-dev                 # for kcov
+      - cmake
 script:
   -  cargo test
