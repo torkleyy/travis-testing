@@ -38,4 +38,4 @@ addons:
       - libosmesa6-dev
 script:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then export PATH=$PATH:$HOME/deps/bin ; fi
-  cargo test
+  -  cargo test
