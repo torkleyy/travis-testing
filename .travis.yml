@@ -2,8 +2,6 @@ sudo: false
 language: rust
 cache:
   cargo: true
-  directories:
-   - $HOME/deps
 rust:
   - stable
 os:
@@ -11,31 +9,14 @@ os:
   - osx
 before_install:
   - "export DISPLAY=:99.0"
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sh -e /etc/init.d/xvfb start; fi
-  # Extract SDL2 .deb into a cached directory (see cache section above and LIBRARY_PATH exports below)
-  # Will no longer be needed when Trusty build environment goes out of beta at Travis CI
-  # (assuming it will have libsdl2-dev and Rust by then)
-  # see https://docs.travis-ci.com/user/trusty-ci-environment/
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then scripts/travis-install-sdl2.sh ; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install sdl2; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew outdated cmake || brew upgrade cmake; fi
 addons:
   apt:
-    sources:
-      # install a newer cmake since at this time Travis only has version 2.8.7
-      - george-edison55-precise-backports
     packages:
-      - xdotool
-      - cmake
-      - cmake-data
       - libxxf86vm-dev
       - libxinerama-dev
       - libxinerama1
       - libxcursor-dev
       - libxcursor1
-      - libglfw-dev
       - libosmesa6-dev
 script:
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then export PATH=$PATH:$HOME/deps/bin ; fi
   -  cargo test
